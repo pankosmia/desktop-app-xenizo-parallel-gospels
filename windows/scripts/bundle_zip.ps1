@@ -65,8 +65,8 @@ if ($answer -eq 'Y') {
   echo "   *****************************************************************************************"
   echo "`n"
 
-  # Use lower case app name in filename and replace spaces with a dash (-) 
-  $APP_NAME = $APP_NAME.ToLower().Replace(" ","-")
+  # Use lower case app name in filename and replace spaces with dashes (-) and remove single apostrophes (')
+  $APP_NAME = $APP_NAME.ToLower().Replace(" ","-").Replace("'","")
   Compress-Archive * ..\..\releases\windows\$APP_NAME-windows-$APP_VERSION.zip
   cd ..\scripts
 

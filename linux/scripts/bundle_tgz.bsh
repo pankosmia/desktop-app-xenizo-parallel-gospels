@@ -84,6 +84,7 @@ echo
 APP_NAME=${APP_NAME,,}
 # Replace spaces with a dash (-) in filename
 APP_NAME=${APP_NAME// /-}
-
+# Make executable and compress
+chmod +x $APP_NAME
 tar cfz ../../releases/linux/$APP_NAME-linux-$APP_VERSION.tgz .
 cd ../scripts

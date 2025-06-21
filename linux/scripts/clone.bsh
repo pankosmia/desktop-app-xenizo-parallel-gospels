@@ -38,5 +38,7 @@ done
 
 # Use lower case app name in path
 APP_NAME=${APP_NAME,,}
+# Replace spaces with dashes (-) in filename
+APP_NAME=${APP_NAME// /-}
 
 cd desktop-app-$APP_NAME/linux/scripts
