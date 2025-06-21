@@ -1,6 +1,9 @@
 # desktop-app-xenizo-parallel-gospels
 This app is built on Pankosmia.
 
+_**Windows developers**, clone to a shorter local repo name, as the windows cargo build c compiler requires repos names of 30 characters or less, e.g.:_
+- `git clone https://github.com/pankosmia/desktop-app-xenizo-parallel-gospels.git desktop-app-xenizo`
+
 ## Environment requirements for this repo
 
 Tested on:
@@ -15,7 +18,7 @@ Tested on:
 <ul><pre>
 |-- repos
     |-- pankosmia
-        |-- desktop-app-xenizo-parallel-gospels
+        |-- desktop-app-xenizo-parallel-gospels <b><em>(But shorten to 30 characters or less on windows!)</em></b>
 </pre></ul>
 
 2. At the root of your fork of this repo, run
@@ -47,7 +50,7 @@ npm install
 ## Setup, Use, and Maintenance Footnotes
 <sup><b>(1)</b></sup> Windows developers, run <b>.bat</b> scripts from a <b>Powershell or Command terminal</b>:
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_...repos\pankosmia\desktop-app-xenizo-parallel-gospels\windows\scripts>_ `.\[scriptname].bat`<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_...repos\pankosmia\desktop-app-xenizo\windows\scripts>_ `.\[scriptname].bat`<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Use a **powershell** terminal for the **.ps1** build scripts.
 
 MacOS developers, run .bsh scripts from a **linux terminal**:<br />
@@ -60,7 +63,7 @@ Linux developers, run .zsh scripts from a **MacOS terminal**:<br />
 <sup><b>(2)</b></sup> The build script will fail on any clients set to a different branch with uncommitted changes or with conflicts vs, the latest main pull. Scroll back up in the terminal to find any build errors and address them.
 
 <br />
-<sup><b>(3)</b></sup> If running into an error saying that another instance is running, you can either find the other instance and stop it, or simply reboot. Another instance could be one started from a .zip, .tgz, installed version, a different desktop-app-xenizo-parallel-gospels, or a manually started panksomia-web.
+<sup><b>(3)</b></sup> If running into an error saying that another instance is running, you can either find the other instance and stop it, or simply reboot. Another instance could be one started from a .zip, .tgz, installed version, run from a different repo, or a manually started panksomia-web.
 
 ## Additional Info TL;DR - For reference when needed!
 ### Ecosystem setup and configuration
@@ -68,7 +71,7 @@ This repo pulls together several libraries and projects into a single app. The p
 
 This is an example. Clients in use may vary. Configuration is handled via `app_config.env`and the `app_setup` script. If you prefer to set this up manually, then see the configuration section under Scripts, towards the bottom of this readme.
 
-```
+<pre>
 |-- repos
     |-- pankosmia
         |-- core-client-content repository
@@ -77,10 +80,10 @@ This is an example. Clients in use may vary. Configuration is handled via `app_c
         |-- core-client-remote-repos repository
         |-- core-client-settings repository
         |-- core-client-workspace repository
-        |-- desktop-app-xenizo-parallel-gospels
+        |-- desktop-app-xenizo-parallel-gospels <b><em>(But shorten to 30 characters or less on windows!)</em></b>
         |-- resource-core
         |-- webfonts-core
-```
+</pre>
 
 ### Installing the clients
 The local_server (pankosmia_web) serves compiled files from the `build` directory of each client, each client must be built. 
