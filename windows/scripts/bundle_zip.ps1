@@ -1,6 +1,6 @@
 # This script uses the APP_VERSION environment variable as defined in app_config.env
 
-# run from pankosmia\desktop-app-[APP NAME]\windows\scripts directory in powershell by:  .\bundle_zip.ps1
+# run from pankosmia\[this-repo's-name]\windows\scripts directory in powershell by:  .\bundle_zip.ps1
 
 echo "`n"
 $answer = Read-Host "     Is the server off?[Y/N]"

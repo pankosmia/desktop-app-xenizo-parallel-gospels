@@ -8,7 +8,9 @@ for /f "tokens=*" %%a in (..\..\app_config.env) do (
   set /a count+= 1
 )
 
-cd ..\..\..\
+cd ..\..\
+for %%I in (.) do set RepoDirName=%%~nxI
+cd ..\
 for /l %%a in (1,1,%count%) do (
   if "!ASSET%%a!" NEQ "" (
     REM Remove any spaces, e.g. trailing ones
@@ -54,11 +56,6 @@ for /l %%a in (1,1,%count%) do (
   )
 )
 
-REM Remove apostrophes (') from APP_NAME for file path
-set APP_NAME=%APP_NAME:'=%
-REM Change spaces to dashes (-) from APP_NAME for file path
-set APP_NAME=%APP_NAME: =-%
-REM Ignoring uppercase in APP_NAME as they are treated the same as lowercase in windows file paths
-cd desktop-app-%APP_NAME%\windows\scripts
+cd %RepoDirName%\windows\scripts
 
 endlocal

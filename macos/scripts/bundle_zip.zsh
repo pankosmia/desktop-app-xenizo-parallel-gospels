@@ -2,7 +2,7 @@
 
 # This script uses the APP_VERSION environment variable as defined in app_config.env
 
-# run from pankosmia\desktop-app-[APP NAME]/macos/scripts directory in powershell by:  ./bundle_tgz.bsh
+# run from pankosmia/[this-repo's-name]/macos/scripts directory in powershell by:  ./bundle_tgz.bsh
 
 echo
 if read -q "choice?Is the server off?[Y/N]? "; then

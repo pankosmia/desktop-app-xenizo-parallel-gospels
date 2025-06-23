@@ -2,7 +2,7 @@
 
 # NOTE: This exe launcher leaves no way to turn off the server other than rebooting the computer or using Task Manager
 
-# run from pankosmia\desktop-app-[APP NAME]\windows\scripts directory in powershell by:  .\bundle_zip.ps1
+# run from pankosmia\[this-repo's-name]\windows\scripts directory in powershell by:  .\bundle_zip.ps1
 
 echo "`n"
 $answer = Read-Host "     Is the server off?[Y/N]"

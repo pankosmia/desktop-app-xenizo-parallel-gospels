@@ -1,7 +1,7 @@
 @echo off
 REM This script requires the APP_VERSION environment variable to be defined in app_config.env
 
-REM run from pankosmia\desktop-app-[APP NAME]\windows\install\makeInstall.bat
+REM run from pankosmia\[this-repo's-name]\windows\install\makeInstall.bat
 
 for /F "tokens=1,2 delims==" %%A in (..\..\app_config.env) do set %%A=%%B
 

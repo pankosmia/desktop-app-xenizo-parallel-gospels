@@ -4,7 +4,9 @@ source ../../app_config.env
 
 count=$( wc -l < "../../app_config.env" )
 
-cd ../../../
+cd ../../
+RepoDirName=$(basename "$(pwd)")
+cd ../
 for ((i=1;i<=count;i++)); do
   eval asset='$'ASSET$i
   if [ ! -z "$asset" ]; then
@@ -52,7 +54,4 @@ for ((i=1;i<=count;i++)); do
   fi
 done
 
-# Use lower case app name in path
-APP_NAME=${APP_NAME:l}
-
-cd desktop-app-$APP_NAME/macos/scripts
+cd $RepoDirName/linux/scripts
