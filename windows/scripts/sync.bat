@@ -35,8 +35,7 @@ SET countb=1
 REM Don't proceed if the origin is not set.
 if not defined vara1 (
   echo origin is not set
-  echo run this with your repo url:  git remote add upstream https://replace-with-url-to-your-repo.git
-  echo then re-run this script
+  echo add origin, then re-run this script
   ENDLOCAL
   exit
 ) else (
