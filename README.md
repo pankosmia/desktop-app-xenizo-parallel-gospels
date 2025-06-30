@@ -45,7 +45,8 @@ npm install
  - To generate a release package for the OS you are using, edit the version number for the release in `app_config.env` then run<sup><b>(1)</b></sup> the `bundle_...` script.
 
 ## Maintenance:
- - To update, change the [latest version](https://docs.rs/pankosmia_web/latest/pankosmia_web/) of panksomia-web in `/local_server/Cargo.toml` and re-run the `build_server` script.
+ - To update the server, change the [latest version](https://crates.io/search?q=pankosmia-web) of [panksomia-web]((https://docs.rs/pankosmia_web/latest/pankosmia_web/)) in `/local_server/Cargo.toml` and re-run the `build_server` script.
+ - To sync this repo with its upstream, run the `sync` script.
 
 ## Setup, Use, and Maintenance Footnotes
 <sup><b>(1)</b></sup> Windows developers, run <b>.bat</b> scripts from a <b>Powershell or Command terminal</b>:
@@ -130,4 +131,11 @@ Run from the provided location:
 | Assembles the build environment (clients) and starts the server **(*)** | /linux/scripts/run.bsh | /windows/scripts/run.bat | /macos/scripts/run.zsh |
 | Deletes the last .zip release bundle if it it exists, runs `app_setup.bat` to ensure version consistency, then on this repo runs `git checkout main`, `git pull`, and `npm install`, runs `node build.js`, then makes a zip release bundle **(*)** | /linux/scripts/bundle_tgz.bsh | /windows/scripts/bundle_zip.ps1 | /macos/scripts/bundle_zip.zsh |
 | Deletes the last .exe release bundle if it it exists, runs `app_setup.bat` to ensure version consistency, then on this repo runs `git checkout main`, `git pull`, and `npm install`, runs `node build.js`, then makes an exe installer **(*)** | | /windows/scripts/bundle_exe.ps1 | |
+
 **(*)** ***Ensure the server (build_server.bat) is current!***
+
+##### Maintenance scripts:
+Run from the provided location:
+| Description | Linux | Windows | MacOS |
+|-------|-------|---------|-------|
+| Facilitates syncing with upstream with exclusion of files expected to differ: | /linux/scripts/sync.bsh | /windows/scripts/sync.bat | /macos/scripts/sync.zsh |
