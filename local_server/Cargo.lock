@@ -1477,9 +1477,9 @@ checksum = "b15813163c1d831bf4a13c3610c05c0d03b39feb07f7e09fa234dac9b15aaf39"
 
 [[package]]
 name = "pankosmia_web"
-version = "0.8.10"
+version = "0.8.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "44cdfe61099c108cbcf7a101852eb4aaf9120d4d872f00c91acd07cf054e5e2d"
+checksum = "8b217f3f4e3d8dbd91d0ca4eaadf0bcc52f5b4068e26d752bbb8bdd53a41130b"
 dependencies = [
  "chrono",
  "copy_dir",
