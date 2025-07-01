@@ -1,7 +1,5 @@
 # This script (the .\makeInstall.bat part) uses the APP_VERSION environment variable as defined in app_config.env
 
-# NOTE: This exe launcher leaves no way to turn off the server other than rebooting the computer or using Task Manager
-
 # run from pankosmia\[this-repo's-name]\windows\scripts directory in powershell by:  .\bundle_zip.ps1
 
 echo "`n"
@@ -10,6 +8,17 @@ if ($answer -eq 'Y') {
     echo "`n"
     echo "Continuing..."
     echo "`n"
+
+  get-content ..\..\app_config.env | foreach {
+    $name, $value = $_.split('=')
+    if ([string]::IsNullOrWhiteSpace($name) -or $name.Contains('#')) {
+      # skip empty or comment line in ENV file
+      return
+    }
+    Set-Variable -Name $name -Value $value
+  }
+  # Use lower case app name in filename and replace spaces with dashes (-) and remove single apostrophes (')
+  $env:FILE_APP_NAME = $APP_NAME.ToLower().Replace(" ","-").Replace("'","")
 
   If (-Not (Test-Path ..\..\local_server\target\release\local_server.exe)) {
     echo "`n"
