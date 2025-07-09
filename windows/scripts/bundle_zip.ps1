@@ -24,7 +24,6 @@ if ($answer -eq 'Y') {
     echo "   * IMPORTANT: Build the local server, then re-run this script! *"
     echo "   ***************************************************************"
     echo "`n"
-    pause
     exit
   }
 

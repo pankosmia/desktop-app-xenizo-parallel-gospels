@@ -3,6 +3,8 @@ linux/build/
 windows/build/
 macos/build/
 local_server/target
+macos/project/
+/macos/release/
 
 #macos
 .DS_Store

@@ -15,7 +15,6 @@ echo      Exiting...
 echo.
 echo      If the server is on, turn it off by exiting the terminal window in which it is running, then re-run this script.
 echo.
-pause
 exit
 
 :server_off

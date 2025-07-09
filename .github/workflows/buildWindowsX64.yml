@@ -1,0 +1,119 @@
+name: Windows x64 Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-for-windows-x64:
+    runs-on: windows-2025  # Specify windows version 2025
+    steps:
+
+      # Install Inno Setup
+      - name: Install Inno Setup
+        run: choco install innosetup
+
+      # Rust
+      - name: Set up Rust
+        id: set-up-rust
+        uses: moonrepo/setup-rust@v1
+
+      # Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Set APP_VERSION from app_config.env
+      - name: Extract APP_VERSION from app_config.env
+        id: get_app_version
+        run: |
+          $envFile = ".\app_config.env"
+          $versionLine = Get-Content $envFile | Where-Object { $_ -match '^APP_VERSION\s*=' }
+          $version = $versionLine -replace ".*=(.*)", '$1'
+          $version = $version.Trim("'").Trim('"')   # Remove quotes if present
+          echo "APP_VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Append
+          echo "APP_VERSION=$version"
+
+      # Set APP_NAME from app_config.env, and use it to define FILE_APP_NAME
+      - name: Extract APP_NAME from app_config.env
+        id: get_app_name
+        run: |
+          $envFile = ".\app_config.env"
+          $appNameLine = Get-Content $envFile | Where-Object { $_ -match '^APP_NAME\s*=' }
+          $appName = $appNameLine -replace ".*=(.*)", '$1'
+          $appName = $appName.Trim("'").Trim('"')   # Remove quotes if present
+          echo "APP_NAME=$appName" | Out-File -FilePath $env:GITHUB_ENV -Append
+          echo "APP_NAME=$appName"
+          $fileAppName = $appName.ToLower().Replace(" ","-").Replace("'","")   # Use lower case app name in filename and replace spaces with dashes (-) and remove single apostrophes (')
+          echo "FILE_APP_NAME=$fileAppName" | Out-File -FilePath $env:GITHUB_ENV -Append
+          echo "FILE_APP_NAME=$fileAppName"
+  
+      # Install the repository
+      - name: Install this repo
+        run: npm install
+
+      # Setup
+      - name: Run app_setup.bat
+        working-directory: .\windows\scripts
+        run: .\app_setup.bat
+
+      # Clone resources and clients
+      - name: Run clone.bat
+        working-directory: .\windows\scripts
+        run: .\clone.bat
+
+      # Install and build clients
+      - name: Run build_clients.bat
+        working-directory: .\windows\scripts
+        run: .\build_clients.bat
+
+      # Build without clean
+      - name: Run build_server_wo_clean.bat
+        working-directory: .\windows\install
+        run: .\build_server_wo_clean.bat
+
+      # Bundle zip
+      - name: Run bundle_zip.ps1
+        working-directory: .\windows\install
+        run: .\bundle_zip.ps1
+
+      # Get names for zip artifact
+      - name: get names for zip artifact
+        run: |
+          echo "Zip for terminal name:"
+          $ZIP_NAME = Get-ChildItem -Path ".\releases\windows\*.zip" -Name
+          echo "ZIP_NAME=$ZIP_NAME" >> $env:GITHUB_ENV
+
+      # Upload zip for terminal artifact
+      - name: Upload zip for terminal artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.ZIP_NAME }}
+          path: .\releases\windows\${{ env.ZIP_NAME }}
+
+      # Get workspace location and repo name
+      - name: show workspace and repo name
+        run: |
+          echo "github.event.repository.name: ${{ github.event.repository.name }}"
+          echo "github.workspace: ${{ github.workspace }}"
+
+      # Run the Inno Setup Installer and build the exe
+      - name: Compile .ISS to .EXE Installer
+        working-directory: .\windows\install
+        run: |
+          echo "APP_NAME: ${{ env.APP_NAME }}"
+          echo "APP_VERSION: ${{ env.APP_VERSION }}"
+          echo "FILE_APP_NAME: ${{ env.FILE_APP_NAME }}"
+          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" /O"..\..\releases\windows" makeInstall.iss
+
+      # Get names for exe artifact
+      - name: get names for exe artifact
+        run: |
+          echo "Exe for terminal name:"
+          $EXE_NAME = Get-ChildItem -Path ".\releases\windows\*.exe" -Name
+          echo "EXE_NAME=$EXE_NAME" >> $env:GITHUB_ENV
+
+      # Upload exe artifact
+      - name: Upload exe artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.EXE_NAME }}
+          path: .\releases\windows\${{ env.EXE_NAME }}

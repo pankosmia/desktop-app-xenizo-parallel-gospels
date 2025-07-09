@@ -1,8 +1,8 @@
 #!/usr/bin/env zsh
 
-# This script uses the APP_VERSION environment variable as defined in app_config.env
+# This script uses the APP_VERSION and APP_NAME environment variables as defined in app_config.env
 
-# run from pankosmia/[this-repo's-name]/macos/scripts directory in powershell by:  ./bundle_tgz.bsh
+# run from pankosmia/[this-repo's-name]/macos/scripts directory by:  ./bundle_tgz.zsh
 
 echo
 if read -q "choice?Is the server off?[Y/N]? "; then
@@ -15,13 +15,12 @@ if read -q "choice?Is the server off?[Y/N]? "; then
     echo "   * IMPORTANT: Build the local server, then re-run this script! *"
     echo "   ***************************************************************"
     echo
-    pause
     exit
   fi
 
   echo
   echo "Running app_setup to ensure version number consistency between buildSpec.json and this build bundle:"
-  ./app_setup.bsh
+  ./app_setup.zsh
 
   echo
   echo "Version is $APP_VERSION"
@@ -49,7 +48,6 @@ if read -q "choice?Is the server off?[Y/N]? "; then
 
   echo "Assembling build environment"
   node build.js
-  cd ../build
   echo
   echo "   **********************************"
   echo "   *                                *"
@@ -65,9 +63,9 @@ if read -q "choice?Is the server off?[Y/N]? "; then
   APP_NAME=${APP_NAME:l}
   # Replace spaces with a dash (-) in filename
   APP_NAME=${APP_NAME// /-}
-  # Make exeutable and zip
+  # Make executable and zip
   chmod +x $APP_NAME.zsh
-  zip -r ../../releases/macos/$APP_NAME-macos-$APP_VERSION.zip * &> /dev/null
+  zip -r ../../releases/macos/$APP_NAME-macos-$APP_VERSION.zip * -x post_install_script.sh appLauncher.sh
   cd ../scripts
 
 else
