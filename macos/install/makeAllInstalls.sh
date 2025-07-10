@@ -21,6 +21,7 @@ for ARCH in "arm64" "intel64"; do
     echo "Building for architecture: $ARCH"
 
     # unzip install files and create mac install package
+    chmod +x makeInstallFromBuild.sh
     ./makeInstallFromBuild.sh  ../../releases/macos/${FILE_APP_NAME}*.zip ../release $ARCH
     cp ../release/$ARCH/*.pkg ../build
 
