@@ -21,7 +21,7 @@ Tested on:
         |-- desktop-app-xenizo-parallel-gospels <b><em>(But shorten to 30 characters or less on windows!)</em></b>
 </pre></ul>
 
-2. At the root of your fork of this repo, run
+2. At the root of your clone of this repo, run
 
 <ul><pre>
 npm install
