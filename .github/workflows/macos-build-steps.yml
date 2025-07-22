@@ -1,4 +1,4 @@
-name: macOS Build Steps
+name: macOS Build
 
 # Define this as a reusable workflow that can be called from other workflows
 on:
