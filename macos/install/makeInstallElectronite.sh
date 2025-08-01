@@ -3,7 +3,7 @@
 # MacOS Installation Package Builder Script
 #
 # Synopsis:
-#   Creates a macOS installation package (.pkg) for the Liminal application
+#   Creates a macOS installation package (.pkg) for the application
 #   based on provided architecture (arm64 or intel64) and APP_VERSION.
 #
 # Description:
@@ -29,7 +29,7 @@
 #   1 : Failure (Invalid/missing parameters or execution error)
 #
 # Output:
-#   Creates installer package at: ../releases/macos/liminal_installer_<arch>_<version>.pkg
+#   Creates installer package at: ../releases/macos/<app-name>_installer_<arch>_<version>.pkg
 
 # Check if APP_NAME environment variable is set
 if [ -z "$APP_NAME" ]; then

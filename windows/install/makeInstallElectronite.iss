@@ -8,7 +8,7 @@ Compression=lzma
 SolidCompression=yes
 
 [Files]
-Source: "..\temp\project\payload\Liminal\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
+Source: "..\temp\project\payload\{#GetEnv('FILE_APP_NAME')}\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
 
 [Icons]
 Name: "{group}\{#GetEnv('APP_NAME')}"; Filename: "{app}\electron\electron.exe"; Parameters: """{app}\electron"""
