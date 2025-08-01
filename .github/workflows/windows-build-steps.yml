@@ -123,6 +123,8 @@ jobs:
         with:
           name: ${{ env.ZIP_NAME }}
           path: .\releases\windows\${{ env.ZIP_NAME }}
+          if-no-files-found: error
+          retention-days: 90
 
       # Get workspace location and repo name
       - name: Show workspace and repo name
@@ -154,6 +156,8 @@ jobs:
         with:
           name: ${{ env.EXE_NAME }}
           path: .\releases\windows\${{ env.EXE_NAME }}
+          if-no-files-found: error
+          retention-days: 90
 
       # Build electronite
       - name: Run makeAllInstallsElectronite.ps1
@@ -175,3 +179,5 @@ jobs:
         with:
           name: ${{ env.ELECTRONITE_EXE_NAME }}
           path: .\releases\windows\intel64\${{ env.ELECTRONITE_EXE_NAME }}
+          if-no-files-found: error
+          retention-days: 90

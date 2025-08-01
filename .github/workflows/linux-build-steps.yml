@@ -83,3 +83,5 @@ jobs:
         with:
           name: ${{ env.TGZ_NAME }}
           path: ./releases/linux/${{ env.TGZ_NAME }}
+          if-no-files-found: error
+          retention-days: 90

@@ -113,6 +113,8 @@ jobs:
         with:
           name: ${{ env.ZIP_NAME }}
           path: ./releases/macos/${{ env.ZIP_NAME }}
+          if-no-files-found: error
+          retention-days: 90
 
       - name: Run makeAllInstalls.sh
         working-directory: ./macos/install
@@ -155,6 +157,8 @@ jobs:
         with:
           name: ${{ env.PKG_NAME_ARM }}
           path: ./macos/release/arm64/${{ env.PKG_NAME_ARM }}
+          if-no-files-found: error
+          retention-days: 90
 
       - name: Upload intel64 artifacts
         if: env.PKG_NAME_INTEL != ''
@@ -162,6 +166,8 @@ jobs:
         with:
           name: ${{ env.PKG_NAME_INTEL }}
           path: ./macos/release/intel64/${{ env.PKG_NAME_INTEL }}
+          if-no-files-found: error
+          retention-days: 90
 
       - name: Setup a README named for arm64 and intel64 artifact
         run: |
@@ -174,6 +180,8 @@ jobs:
         with:
           name: MacOS-PKG-README-arm64-and-intel64.txt
           path: ./macos/build/MacOS-PKG-README-arm64-and-intel64.txt
+          if-no-files-found: error
+          retention-days: 90
 
       # build electronite installs
       - name: Run makeAllInstallsElectronite.sh
@@ -215,6 +223,8 @@ jobs:
         with:
           name: ${{ env.PKG_NAME_ARM }}
           path: ./releases/macos/${{ env.PKG_NAME_ARM }}
+          if-no-files-found: error
+          retention-days: 90
 
       - name: Upload electronite intel64 artifacts
         if: env.PKG_NAME_INTEL != ''
@@ -222,3 +232,5 @@ jobs:
         with:
           name: ${{ env.PKG_NAME_INTEL }}
           path: ./releases/macos/${{ env.PKG_NAME_INTEL }}
+          if-no-files-found: error
+          retention-days: 90
