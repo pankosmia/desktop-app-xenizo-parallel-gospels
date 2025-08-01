@@ -11,7 +11,7 @@
 
 .PREREQUISITES
     - Inno Setup 6 must be installed at "C:\Program Files (x86)\Inno Setup 6\ISCC.exe"
-    - APP_VERSION environment variable must be set (e.g., $env:APP_VERSION = "0.2.6")
+    - APP_VERSION environment variable must be set in app_config.env
 
 .OUTPUTS
     Creates an installer at releases\windows\$arch\<app-name>_installer_*.exe
@@ -68,7 +68,7 @@ try {
     # Clean up and create project directories
     Remove-Item -Path "..\temp\project" -Recurse -Force -ErrorAction SilentlyContinue
     $projectPath = "..\temp\project"
-    $payloadPath = Join-Path $projectPath "payload\$fileAppName"
+    $payloadPath = Join-Path $projectPath "payload\"$fileAppName
 
     New-Item -ItemType Directory -Force -Path $payloadPath | Out-Null
 
