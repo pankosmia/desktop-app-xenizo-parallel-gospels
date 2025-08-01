@@ -27,6 +27,16 @@ jobs:
       electronite-exe-name: ${{ steps.get-electronite-exe-name.outputs.electronite-exe-name }}
     
     steps:
+      # Turn off re-runs
+      - name: No re-runs please
+        run: |
+         if [ "$GITHUB_RUN_ATTEMPT" -gt 1 ]; then
+            echo "No re-runs. They can lead to a situation where code older than HEAD isn't compatible. Start a new workflow run instead."
+            exit 1
+          else
+            echo "NOT a re-run"
+          fi
+
       # Install Inno Setup
       - name: Install Inno Setup
         run: choco install innosetup

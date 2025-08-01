@@ -38,6 +38,17 @@ jobs:
       pkg-name-intel: ${{ steps.get-installer-names.outputs.pkg-name-intel }}
     
     steps:
+      # Turn off re-runs
+      - name: No re-runs please
+        run: |
+         if [ "$GITHUB_RUN_ATTEMPT" -gt 1 ]; then
+            echo "No re-runs. They can lead to a situation where code older than HEAD isn't compatible. Start a new workflow run instead."
+            exit 1
+          else
+            echo "NOT a re-run"
+          fi
+
+      # Add delay before build
       - name: Add delay before build
         run: sleep ${{ inputs.delay_seconds }}
 
