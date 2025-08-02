@@ -68,7 +68,7 @@ try {
     # Clean up and create project directories
     Remove-Item -Path "..\temp\project" -Recurse -Force -ErrorAction SilentlyContinue
     $projectPath = "..\temp\project"
-    $payloadPath = Join-Path $projectPath "payload\"$fileAppName
+    $payloadPath = Join-Path $projectPath "payload\app"
 
     New-Item -ItemType Directory -Force -Path $payloadPath | Out-Null
 
