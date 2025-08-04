@@ -172,6 +172,7 @@ jobs:
       - name: Setup a README named for arm64 and intel64 artifact
         run: |
           echo "Setup a README named for arm64 and intel64 artifact"
+          echo ${{github.event.pull_request.head.repo.full_name}}
           cp ./macos/build/README.txt ./macos/build/MacOS-PKG-README-arm64-and-intel64.txt
 
       - name: Upload README for arm64 and intel64 artifact
