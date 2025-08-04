@@ -173,14 +173,14 @@ jobs:
         run: |
           echo "Setup a README named for arm64 and intel64 artifact"
           echo ${{github.event.pull_request.head.repo.full_name}}
-          cp ./macos/build/README.txt ./macos/build/MacOS-PKG-README-arm64-and-intel64.txt
+          cp ./macos/build/README.txt ./macos/build/macos-installer-readme-arm64-and-intel64.txt
 
       - name: Upload README for arm64 and intel64 artifact
         if: env.PKG_NAME_ARM != '' # only upload once
         uses: actions/upload-artifact@v4
         with:
-          name: MacOS-PKG-README-arm64-and-intel64.txt
-          path: ./macos/build/MacOS-PKG-README-arm64-and-intel64.txt
+          name: macos-installer-readme-arm64-and-intel64.txt
+          path: ./macos/build/macos-installer-readme-arm64-and-intel64.txt
           if-no-files-found: error
           retention-days: 90
 

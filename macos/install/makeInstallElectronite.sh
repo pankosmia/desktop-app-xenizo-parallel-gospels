@@ -51,7 +51,7 @@ fi
 
 arch="$1"
 
-PKG_NAME="${FILE_APP_NAME}-installer-macos-standalone-${arch}-${APP_VERSION}.pkg"
+PKG_NAME="${FILE_APP_NAME}-macos-installer-standalone-${arch}-${APP_VERSION}.pkg"
 rm -f ./build/${PKG_NAME}
 rm -f ../releases/macos/${PKG_NAME}
 
