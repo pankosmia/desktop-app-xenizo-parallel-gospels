@@ -182,17 +182,6 @@ app.whenReady().then(() => {
           {role: 'front'},
           {role: 'window'}
         ]
-      },
-      {
-        label: 'Help',
-        submenu: [
-          {
-            label: 'Learn More',
-            click: async () => {
-              await shell.openExternal('https://electronjs.org');
-            }
-          }
-        ]
       }
     ];
     const menu = Menu.buildFromTemplate(template);
