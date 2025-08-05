@@ -78,8 +78,8 @@ jobs:
         id: get_app_name
         run: |
           source ./app_config.env
-          fileAppName=${APP_NAME:l} # Use lower case app name in filename
-          fileAppName=${APP_NAME// /-} # Replace spaces with a dash (-) in filename
+          lcAppName=${APP_NAME:l} # Use lower case app name in filename
+          fileAppName=${lcAppName// /-} # Replace spaces with a dash (-) in filename
           echo "FILE_APP_NAME=$fileAppName" >> $GITHUB_ENV
 
       # Grant execute permissions for the shell and bash scripts
