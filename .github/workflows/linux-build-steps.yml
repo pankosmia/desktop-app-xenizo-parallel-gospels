@@ -23,7 +23,8 @@ jobs:
       - name: No re-runs please
         run: |
          if [ "$GITHUB_RUN_ATTEMPT" -gt 1 ]; then
-            echo "No re-runs. They can lead to a situation where code older than HEAD isn't compatible. Start a new workflow run instead."
+            echo "No re-runs. They use the commit SHA and git ref of the original event that triggered the workflow run. However, that does not extend to client and resource repos which may expect a more recent panksomia-web."
+            echo "Start a new workflow run instead."
             exit 1
           else
             echo "NOT a re-run"
