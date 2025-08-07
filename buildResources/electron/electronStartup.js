@@ -115,6 +115,7 @@ function createWindow () {
       width: 1024,
       height: 768,
       autoHideMenuBar: true,
+      icon:'icon.png',
       show: false  // Don't show until ready to maximize
     });
 
