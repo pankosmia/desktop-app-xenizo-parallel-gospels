@@ -18,7 +18,7 @@ Upgrade from versions prior to 0.4.0-rc1:
   4. Restore the backup copy from step 1 to `~/panksomia_repos/` such that the prior immediate subdirectories of `~/panksomia_working/repos` are now immediate subdirectores of `~/panksomia_repos/`.
      The resulting directory structure should be along the lines of the following
      ~
-     └───panksomia_repos/
+     └───panksomia_repos
          ├───_git.door43.org
          │   └───[...more subdirectories]
          └───_local_
