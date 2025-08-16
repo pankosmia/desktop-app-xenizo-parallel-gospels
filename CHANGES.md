@@ -1,8 +1,8 @@
 # <span id="toc">CHANGELOG</span>
-- [16 Aug 2025](#16-AUG-2025)
-- [14 Jul 2025](#14-JUL-2025)
+- [16 Aug 2025](#16-aug-2025)
+- [14 Jul 2025](#14-jul-2025)
 
-## <span id="16-AUG-2025">16 Aug 2025</span>  ... [↩](#toc)</sup></sub>
+## <span id="16-aug-2025">16 Aug 2025</span>  ... [↩](#toc)</sup></sub>
 - Now built with Electronite (macos and windows)
 - New editor for Open Bible Stories (text and audio, basic video generation)
 - New, experimental "by unit of meaning" Scripture editor
@@ -19,7 +19,7 @@
 - Electronite Developer Viewer (windows)
 - Github actions master build workflow
 
-## <span id="14-JUL-2025">14 Jul 2025</span>  ... [↩](#toc)</sup></sub>
+## <span id="14-jul-2025">14 Jul 2025</span>  ... [↩](#toc)</sup></sub>
 ### General
 - Fix scroll and page height issues
 - Make margins/padding more consistent
