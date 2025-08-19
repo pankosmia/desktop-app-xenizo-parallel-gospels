@@ -21,12 +21,12 @@ while [[ "$#" -gt 0 ]]
 done
 
 # Assign default value if -s is not present
-if [ $askIfOff ="" ]; then
+if [ -z ${askIfOff+x} ]; then # askIfOff is unset"
   askIfOff=-yes
 fi
 
 # Assign default value if -g is not present
-if [ $isGHA ="" ]; then
+if [ -z ${isGHA+x} ]; then # isGHA is unset
   isGHA=-no
 fi 
 

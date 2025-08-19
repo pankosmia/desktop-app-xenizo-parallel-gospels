@@ -26,7 +26,7 @@ if [ -z ${askIfOff+x} ]; then # askIfOff is unset"
 fi
 
 # Assign default value if -g is not present
-if [ -z $(isGHA+x) ]; then # isGHA is unset
+if [ -z ${isGHA+x} ]; then # isGHA is unset
   isGHA=-no
 fi 
 
