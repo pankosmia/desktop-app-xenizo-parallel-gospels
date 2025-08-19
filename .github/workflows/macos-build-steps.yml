@@ -91,8 +91,8 @@ jobs:
           chmod +x ./macos/scripts/app_setup.zsh
           chmod +x ./macos/scripts/clone.zsh
           chmod +x ./macos/scripts/build_clients.zsh
-          chmod +x ./linux/scripts/build_server.zsh
-          chmod +x ./linux/scripts/bundle_zip.zsh
+          chmod +x ./macos/scripts/build_server.zsh
+          chmod +x ./macos/scripts/bundle_zip.zsh
           chmod +x ./macos/install/makeAllInstalls.sh
 
       - name: Run app_setup.zsh
