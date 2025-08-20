@@ -11,21 +11,32 @@ if ! [[ $askIfOff =~ ^(-s) ]]; then
   while true; do
     read "choice?Only one instance of the server can be running at a time. Is the server off? [Y/N y/n]: "
     case $choice in 
-      [yY] ) echo "Continuing...";
-        break;;
-      [nN] ) echo;
-        echo "     Exiting...";
+      [yY] ) echo
+        echo "Continuing..."
+        break
+        ;;
+      [nN] ) echo
+        echo "     Exiting..."
         echo
-        echo "If the server is on, turn it off (e.g., Ctrl-C in terminal window or exit app), then re-run this script.";
+        echo "If the server is on, turn it off (e.g., Ctrl-C in terminal window or exit app), then re-run this script."
         echo
         exit
         ;;
-      * ) echo;
-        echo "     \"$choice\" is not a valid response. Please enter a Y or y for yes, or an N or n for no.";
+      * ) echo
+        echo "     \"$choice\" is not a valid response. Please enter a Y or y for yes, or an N or n for no."
         echo
         ;;
     esac
   done
+fi
+
+if [ ! -f ../../buildSpec.json ] || [ ! -f ../../globalBuildResources/i18nPatch.json ] || [ ! -f ../buildResources/setup/app_setup.json ]; then
+  ./app_setup.zsh
+  echo
+  echo "  +-----------------------------------------------------------------------------+"
+  echo "  | Config files were rebuilt by \`./app_setup.bsh\` as one or more were missing. |"
+  echo "  +-----------------------------------------------------------------------------+"
+  echo
 fi
 
 # set port environment variables
@@ -33,12 +44,13 @@ export ROCKET_PORT=19119
 export RUST_BACKTRACE=1
 
 if [ -d ../build ]; then
-  echo "Removing last build environment"
+  echo "Removing last build environment..."
+  echo
   rm -rf ../build
 fi
 
 if [ ! -d ../build ]; then
-  echo "Assembling build environment"
+  echo "Assembling build environment..."
   node ./build.js
 fi
 
