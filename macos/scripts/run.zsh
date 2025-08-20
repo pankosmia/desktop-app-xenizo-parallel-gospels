@@ -34,7 +34,7 @@ if [ ! -f ../../buildSpec.json ] || [ ! -f ../../globalBuildResources/i18nPatch.
   ./app_setup.zsh
   echo
   echo "  +-----------------------------------------------------------------------------+"
-  echo "  | Config files were rebuilt by \`./app_setup.bsh\` as one or more were missing. |"
+  echo "  | Config files were rebuilt by \`./app_setup.zsh\` as one or more were missing. |"
   echo "  +-----------------------------------------------------------------------------+"
   echo
 fi
