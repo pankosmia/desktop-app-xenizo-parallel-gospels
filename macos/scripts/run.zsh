@@ -28,30 +28,30 @@ if ! [[ $askIfOff =~ ^(-s) ]]; then
   done
 fi
 
-    # set port environment variables
-    export ROCKET_PORT=19119
-    export RUST_BACKTRACE=1
+# set port environment variables
+export ROCKET_PORT=19119
+export RUST_BACKTRACE=1
 
-    if [ -d ../build ]; then
-      echo "Removing last build environment"
-      rm -rf ../build
-    fi
+if [ -d ../build ]; then
+  echo "Removing last build environment"
+  rm -rf ../build
+fi
 
-    if [ ! -d ../build ]; then
-      echo "Assembling build environment"
-      node ./build.js
-    fi
+if [ ! -d ../build ]; then
+  echo "Assembling build environment"
+  node ./build.js
+fi
 
-    cd ../build
+cd ../build
 
-    echo
-    echo "Running... When ready to stop this server, press Ctrl-C."
-    echo "       If Ctrl-Z (suspend) is used by accident, then run \`killall -9 \"server.bin\"\` or Force Quit from the Activity Monitor,"
-    echo "       or to resume run \`fg\` for the last suspended process, otherwise \`fg \"./run.zsh\"\`."
-    echo
+echo
+echo "Running... When ready to stop this server, press Ctrl-C."
+echo "       If Ctrl-Z (suspend) is used by accident, then run \`killall -9 \"server.bin\"\` or Force Quit from the Activity Monitor,"
+echo "       or to resume run \`fg\` for the last suspended process, otherwise \`fg \"./run.zsh\"\`."
+echo
 
-    SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-    export APP_RESOURCES_DIR="$SCRIPT_DIR/lib/"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+export APP_RESOURCES_DIR="$SCRIPT_DIR/lib/"
 
-    SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-    $SCRIPT_DIR/bin/server.bin
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+$SCRIPT_DIR/bin/server.bin
