@@ -66,8 +66,10 @@ try {
 
     Write-Host "Version is $env:APP_VERSION"
 
-    # Clean up any existing installers
-    Get-ChildItem -Path "..\..\releases\windows\"$fileAppName"_installer_*.exe" | Remove-Item -Force
+    if ($Dev -ne 'Y') {
+        # Clean up any existing installers
+        Get-ChildItem -Path "..\..\releases\windows\"$fileAppName"_installer_*.exe" | Remove-Item -Force
+    }
 
     # Change to build directory
     Set-Location -Path "..\build" -ErrorAction Stop
@@ -146,23 +148,22 @@ try {
         exit 1
     }
 
-    # Copy README
-    $readmeSrc = "..\build\README.txt"
-    $readmeDest = "$payloadPath"
-    if (Test-Path $readmeSrc) {
-        New-Item -ItemType Directory -Force -Path $readmeDest | Out-Null
-        Copy-Item -Path $readmeSrc -Destination "$readmeDest\README.txt" -Force
-    }
-
-    # Copy bin and lib directories from build directory
-    if (Test-Path ".\bin") {
-        Copy-Item -Path ".\bin" -Destination $payloadPath -Recurse -Force
-    }
-    if (Test-Path ".\lib") {
-        Copy-Item -Path ".\lib" -Destination $payloadPath -Recurse -Force
-    }
-
     if ($Dev -ne 'Y') {
+        # Copy README
+        $readmeSrc = "..\build\README.txt"
+        $readmeDest = "$payloadPath"
+        if (Test-Path $readmeSrc) {
+            New-Item -ItemType Directory -Force -Path $readmeDest | Out-Null
+            Copy-Item -Path $readmeSrc -Destination "$readmeDest\README.txt" -Force
+        }
+
+        # Copy bin and lib directories from build directory
+        if (Test-Path ".\bin") {
+            Copy-Item -Path ".\bin" -Destination $payloadPath -Recurse -Force
+        }
+        if (Test-Path ".\lib") {
+            Copy-Item -Path ".\lib" -Destination $payloadPath -Recurse -Force
+        }
 
       # Create and copy scripts if needed
       $scriptsPath = "$projectPath\scripts"
