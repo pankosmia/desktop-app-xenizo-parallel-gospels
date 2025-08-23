@@ -18,7 +18,7 @@
 
 .NOTES
     - Cleans up existing installers before building
-    - Creates directory structure in .\windows\temp\project\payload\<app-name>
+    - Creates directory structure in .\windows\$pkgDir\project\payload\<app-name>
     - Copies necessary files including Electron, README, bin, and lib directories
     - Compiles the installer using Inno Setup
 
@@ -58,7 +58,7 @@ try {
     
     # Check if FILE_APP_NAME environment variable is set
     if (-not $env:FILE_APP_NAME) {
-        Write-Host "Warning: FILE_APP_NAME environment variable is not set. Generating default"
+        Write-Host "Warning: FILE_APP_NAME environment variable is not set. Generating..."
         $fileAppName = $env:APP_NAME.ToLower().Replace(" ","-").Replace("'","")   # Use lower case app name in filename and replace spaces with dashes (-) and remove single apostrophes (')
         $env:FILE_APP_NAME = $fileAppName
         echo "FILE_APP_NAME=$env:FILE_APP_NAME"
@@ -66,6 +66,7 @@ try {
 
     Write-Host "Version is $env:APP_VERSION"
 
+    # Needed for local bundles. Not required in GHA but does no harm.
     if ($Dev -ne 'Y') {
         # Clean up any existing installers
         Get-ChildItem -Path "..\..\releases\windows\"$fileAppName"_installer_*.exe" | Remove-Item -Force
@@ -77,9 +78,15 @@ try {
     # Create folder structure for package
     Write-Host "Building folder structure for package..."
 
-    # Clean up and create project directories
-    Remove-Item -Path "..\temp\project" -Recurse -Force -ErrorAction SilentlyContinue
-    $projectPath = "..\temp\project"
+    if ($Dev -eq 'Y') {
+      $pkgDir = "viewer"
+    } else {
+        $pkgDir = "temp"
+    }
+
+    # Clean up and create project directories -- Needed for local bundles; Not required in GHA but also doesn't hurt anything.
+    Remove-Item -Path "..\$pkgDir\project" -Recurse -Force -ErrorAction SilentlyContinue
+    $projectPath = "..\$pkgDir\project"
     $payloadPath = Join-Path $projectPath "payload\app"
 
     New-Item -ItemType Directory -Force -Path $payloadPath | Out-Null
@@ -133,7 +140,7 @@ try {
         (Get-Content "$electronDestPath\package.json").Replace('${APP_NAME}', $env:APP_NAME).Replace('${APP_VERSION}', $env:APP_VERSION) | Set-Content "$electronDestPath\package.json"
         
         # Copy architecture-specific files
-        $archElectronPath = Join-Path $PSScriptRoot "..\temp\electron.$arch"
+        $archElectronPath = Join-Path $PSScriptRoot "..\$pkgDir\electron.$arch"
         Write-Host "Electron arch path: $archElectronPath" -ErrorAction SilentlyContinue
 
         if (Test-Path $archElectronPath) {
