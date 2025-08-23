@@ -54,7 +54,9 @@ fi
 
 # The bundle_zip script will ensure the latest is checked out, the clone is installed, and the app_setup script is run
 echo
-echo "Bundling Zip for Electronite Package Build..."
+echo "Bundling Zip..."
+echo "  - updates the build environment for the Electronite package build,"
+echo "  - and creates a zip bundle that parallels the Electronite package."
 ./bundle_zip.zsh -s
 
 echo
