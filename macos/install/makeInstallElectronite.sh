@@ -23,6 +23,7 @@
 # Parameters:
 #   $1 : Architecture type (Required)
 #        Accepted values: arm64, intel64
+#   $2 : -d indicates a development run (for building viewer only)
 #
 # Returns:
 #   0 : Success
@@ -53,6 +54,7 @@ fi
 arch="$1"
 devRun="${2:-no}" # This is a development viewer run if $1 is -d
 
+# Needed for local bundles. Not required in GHA but does no harm.
 if ! [[ $devRun =~ ^(-d) ]]; then
   PKG_NAME="${FILE_APP_NAME}-macos-installer-standalone-${arch}-${APP_VERSION}.pkg"
   rm -f ./build/${PKG_NAME}
@@ -65,11 +67,18 @@ cd ../build || exit 1
 # build folder structure for package
 
 # Turn on command echo
-set -x
+# set -x
 
-rm -rf ../temp/project
+if [[ $devRun =~ ^(-d) ]]; then
+        pkgDir=viewer
+    else
+        pkgDir=temp
+    fi
 
-APP_BASE_DIR="../temp/project/payload/APP_NAME.app" # temp app foldername without spaces, will rename to actual name later
+# Needed for local bundles. Not required in GHA but also doesn't hurt anything.
+rm -rf ../$pkgDir/project
+
+APP_BASE_DIR="../$pkgDir/project/payload/APP_NAME.app" # temp app foldername without spaces, will rename to actual name later
 
 mkdir -p ${APP_BASE_DIR}/Contents/MacOS
 
@@ -99,7 +108,7 @@ sed -i.bak "s/\${APP_NAME}/$APP_NAME/g" "${APP_BASE_DIR}/Contents/electron/packa
 sed -i.bak "s/\${APP_VERSION}/$APP_VERSION/g" "${APP_BASE_DIR}/Contents/electron/package.json"  # Replace all occurrences of ${APP_NAME}
 
 # now copy architecture specific electron files
-cp -R ../temp/electron.$arch/* ${APP_BASE_DIR}/Contents/electron
+cp -R ../$pkgDir/electron.$arch/* ${APP_BASE_DIR}/Contents/electron
 
 # Check if Electron executable owner is current user
 ELECTRON_OWNER=$(stat -f %u ${APP_BASE_DIR}/Contents/electron/Electron.app/Contents/MacOS/Electron)
@@ -145,14 +154,16 @@ if ! [[ $devRun =~ ^(-d) ]]; then
   type $PLIST_FILE
 
   cp -R ./bin ${APP_BASE_DIR}/Contents/
+  echo "copied bin to $APP_BASE_DIR/Contents/"
   chmod 755 ${APP_BASE_DIR}/Contents/bin/server.bin
   chmod 755 ${APP_BASE_DIR}/Contents/MacOS/${LAUNCHER_NAME}
 
   cp -R ./lib ${APP_BASE_DIR}/Contents/
+  echo "copied lib to $APP_BASE_DIR/Contents/"
 
-  mkdir -p ../temp/project/scripts
-  cp ../install/post_install_script.sh ../temp/project/scripts/postinstall
-  chmod +x ../temp/project/scripts/postinstall
+  mkdir -p ../$pkgDir/project/scripts
+  cp ../install/post_install_script.sh ../$pkgDir/project/scripts/postinstall
+  chmod +x ../$pkgDir/project/scripts/postinstall
 fi
 
 # set execute permission on all folders
@@ -172,8 +183,8 @@ if ! [[ $devRun =~ ^(-d) ]]; then
   # build pkg
   cd ..
   pkgbuild \
-    --root ./temp/project/payload \
-    --scripts ./temp/project/scripts \
+    --root ./$pkgDir/project/payload \
+    --scripts ./$pkgDir/project/scripts \
     --identifier ${IDENTIFIER} \
     --version "$APP_VERSION" \
     --install-location /Applications \
