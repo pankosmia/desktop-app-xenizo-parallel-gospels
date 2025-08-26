@@ -13,7 +13,19 @@
     Requires PowerShell and depends on:
     - getElectronRelease.ps1
     - makeInstallElectroniteFromZip.ps1
+
+.PARAMETER IsGHA
+    Specify -IsGHA "N" when run locally to avoid a failed attempt to list github actions environment variables.
+    - Default is "Y"
+
+.PARAMETER Dev
+    Specify -Dev "Y" when generating a development viewer.
+    - Default is "N"
 #>
+param(
+    [string]$Dev,
+    [string]$IsGHA
+)
 
 # get environment variables from app_config.env
 get-content ..\..\app_config.env | foreach {
@@ -29,8 +41,10 @@ get-content ..\..\app_config.env | foreach {
 $env:APP_NAME=$APP_NAME.Trim("'")
 $env:APP_VERSION=$APP_VERSION
 
-# show environment variables defined
-env
+if ($IsGHA -ne 'N') {
+  # show environment variables defined
+  env
+}
 
 # Define URLs for different architectures
 $ElectronArm64 = "https://github.com/unfoldingWord/electronite/releases/download/v37.1.0-graphite/electronite-v37.1.0-graphite-win32-arm64.zip"
@@ -53,26 +67,44 @@ foreach ($ARCH in @("intel64")) {
 
     # Get Electron release
     Write-Host "Getting Electron release..."
-    $electronResult = & "$PSScriptRoot\getElectronRelease.ps1" -downloadUrl $downloadElectronUrl -arch $ARCH
+    $electronResult = & "$PSScriptRoot\getElectronRelease.ps1" -downloadUrl $downloadElectronUrl -arch $ARCH -Dev $Dev
     if ($LASTEXITCODE -ne 0) {
         Write-Host "Error: Failed to get Electron release files at $downloadElectronUrl"
         exit 1
     }
 
-    # verify zip
-    If (-Not (Test-Path ..\..\releases\windows\$expectedZip)) {
-        echo "Error: Missing windows .zip release"
+    if ($Dev -ne 'Y') {
+      # verify zip
+      If (-Not (Test-Path ..\..\releases\windows\$expectedZip)) {
+          echo "Error: Missing windows .zip release"
+          exit 1
+      }
+    }
+
+    # Run makeInstallElectronite PowerShell script
+    Write-Host "`n"
+    Write-Host "     *****************************************"
+    Write-Host "     * Running makeInstallElectronite.ps1... *"
+    Write-Host "     * Wait for the prompt.                  *"
+    Write-Host "     *****************************************"
+    Write-Host "`n"
+    $makeInstallElectronitePath = Join-Path $PSScriptRoot "makeInstallElectronite.ps1"
+    if (-not (Test-Path $makeInstallElectronitePath)) {
+        Write-Host "Error: makeInstallElectronite.ps1 not found at $makeInstallElectronitePath"
         exit 1
     }
 
-    # Make install from zip
-    Write-Host "Creating install package..."
-    $zipPath = Resolve-Path "..\..\releases\windows\$expectedZip"
-    $installResult = & "$PSScriptRoot\makeInstallElectroniteFromZip.ps1" -zipPath $zipPath -destinationFolder "..\temp\release" -arch $ARCH
+    if ($Dev -eq 'Y') {
+      $result = & "$makeInstallElectronitePath" -Dev $Dev -arch $arch
+    } else {
+      $result = & "$makeInstallElectronitePath" -arch $arch
+    }
     if ($LASTEXITCODE -ne 0) {
-        Write-Host "Error: Build failed for architecture $ARCH"
+        Write-Host "Error: makeInstallElectronite.ps1 failed with exit code $LASTEXITCODE"
         exit 1
     }
 }
 
-Write-Host "All architectures built successfully"
+if ($Dev -ne 'Y') {
+  Write-Host "All architectures built successfully"
+}

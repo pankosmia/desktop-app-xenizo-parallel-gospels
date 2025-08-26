@@ -1,17 +1,15 @@
 /**
- * @fileoverview Electron startup script for managing application lifecycle, server process, and window creation.
+ * @fileoverview Electron startup script for managing application lifecycle and window creation. (This is the dev viewer version; Server start and stop is handled separately.)
  *
  * @synopsis
- * This script serves as the main entry point for an Electron application, handling:
+ * This script serves as the main entry point for the dev version the Electronite viewer, handling:
  * - Application window management
- * - Backend server process lifecycle
  * - Custom menu creation (especially for macOS)
  * - Application events and shutdown procedures
  *
  * @description
- * The script manages the lifecycle of both the Electron frontend and a backend server process.
- * It creates the main application window, starts/stops a backend server on port 19119,
- * and handles various application events like window creation, activation, and shutdown.
+ * The script manages the lifecycle of the Electron frontend. (This is the dev viewer version; The backend server process is handled separately.)
+ * It creates the main application viewer window on port 19119,
  * For macOS, it creates a custom application menu with standard operations.
  *
  * @requirements
@@ -26,21 +24,9 @@ const { app, BrowserWindow, Menu, shell, ipcMain, ipcRenderer, contextBridge, di
 const { spawn, execSync } = require('child_process');
 const path = require('path');
 
-let serverProcess = null;
 app.name = '${APP_NAME}';
 const port = '19119';
 let canClose = true;
-
-// Function to check if server is running (on port)
-function isServerRunning() {
-  try {
-    // macOS & Linux: use lsof; Windows would require a different approach
-    execSync(`lsof -i:${port} | grep LISTEN`, { stdio: 'ignore' });
-    return true;
-  } catch {
-    return false;
-  }
-}
 
 /**
  * wraps timer in a Promise to make an async function that continues after a specific number of milliseconds.
@@ -53,68 +39,13 @@ function delay(ms) {
   );
 }
 
-const MAC_SERVER_PATH = './bin/server.bin';
-const WIN_SERVER_PATH = './bin/server.exe';
-
-function startServer() {
-  if (!isServerRunning()) {
-    const serverPath = process.platform === 'win32' ? WIN_SERVER_PATH : MAC_SERVER_PATH;
-    const resourcesDir = './lib/';
-    const workingDir =  path.join(__dirname, '..');
-    console.log('startServer() - workingDir is ' + workingDir);
-
-    console.log('startServer() - resourcesDir is ' + resourcesDir);
-    const env = {
-      ...process.env,
-      APP_RESOURCES_DIR: resourcesDir,
-      ROCKET_PORT: port
-    };
-
-    console.log('startServer() - env is ', env);
-    
-    serverProcess = spawn(serverPath, [], {
-      stdio: 'ignore',
-      detached: true,
-      env: env,
-      cwd: workingDir
-    });
-    serverProcess.unref();
-    console.log('startServer() - Server started at ' + path.join(workingDir, serverPath));
-  } else {
-    console.log(startServer() - 'Server already running.');
-  }
-}
-
-function stopServer() {
-  if (serverProcess) {
-    // Kill the process we spawned (or use another mechanism if you need gentle shutdown)
-    try {
-      process.kill(serverProcess.pid);
-      console.log('stopServer() - Server stopped.');
-    } catch (e) {
-      // It may have already exited
-      console.error('stopServer() - Server Failed to stop - process ID kill failed.');
-    }
-  } else {
-    // Optionally: kill whatever is listening on port
-    try {
-      console.log('stopServer() - Trying to stop server forcefully.');
-      execSync(`lsof -t -i:${port} | xargs kill -9`);
-      console.log('stopServer() - Server stopped forcefully.');
-    } catch {
-      // ignore if nothing is running
-      console.error(`stopServer() - Server Failed to stop - process at port ${port} ID kill failed.`);
-    }
-  }
-}
-
 function handleSetCanClose(event, newCanClose) {
     canClose = newCanClose;
 }
 
 function createWindow() {
     delay(500).then(() => {
-        console.log('createWindow() - after delay');
+        console.log('createWindow() - dev viewer');
         const win = new BrowserWindow({
             width: 1024,
             height: 768,
@@ -236,9 +167,8 @@ app.whenReady().then(() => {
     const menu = Menu.buildFromTemplate(template);
     Menu.setApplicationMenu(menu);
   }
-  
-  startServer();
-  setTimeout(createWindow, 2000); // Wait 2 seconds for server to start (adjust as needed)
+
+  setTimeout(createWindow, 0); // Wait 0 seconds for server to start (dev viewer)
 });
 
 app.on('window-all-closed', () => {
@@ -246,16 +176,6 @@ app.on('window-all-closed', () => {
   // On macOS, apps are expected to stay alive until explicitly quit
   // but we quit anyway so server doesn't remain running
   app.quit();
-});
-
-app.on('will-quit', () => {
-  console.log('will-quit() - app quitting');
-  stopServer();
-});
-
-app.on('before-quit', () => {
-  console.log('before-quit() - app quitting');
-  stopServer();
 });
 
 app.on('activate', () => {

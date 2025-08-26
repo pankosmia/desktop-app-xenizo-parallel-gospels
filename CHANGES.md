@@ -1,6 +1,36 @@
-# CHANGELOG
+# <span id="toc">CHANGELOG</span>
+- [21 Aug 2025](#21-aug-2025)
+- [19 Aug 2025](#19-aug-2025)
+- [16 Aug 2025](#16-aug-2025)
+- [14 Jul 2025](#14-jul-2025)
 
-## v0.3.0 (14 Jul 2025)
+## <span id="21-aug-2025">21 Aug 2025</span>  ... [↩](#toc)</sup></sub>
+- Electronite Development Viewer (macos)
+- Optional script arguments for developers (macos)
+- Other dev script improvements
+
+## <span id="19-aug-2025">19 Aug 2025</span>  ... [↩](#toc)</sup></sub>
+- Prevent extraneous files from listing in the UI
+- New editor for Open Bible Stories (text and audio, basic video generation)
+- Optional script arguments for developers (linux)
+
+## <span id="16-aug-2025">16 Aug 2025</span>  ... [↩](#toc)</sup></sub>
+- Now built with Electronite (macos and windows)
+- New, experimental "by unit of meaning" Scripture editor
+- Archiving and quarantining burritos
+- Adding and changing remote for local burritos
+- Filter proposed workspace resources by project type
+- Checksum-based detection of unsaved changes
+- Electron-aware "unsaved changes" dialog (currently for OBS only)
+- Server-based backup file management
+- Improved and more consistent navigation
+- Lots of tidying of the UI (more MUI, more use of MUI theme, data grids replace static tables, more consistency)
+- Refactoring of server, addition of new endpoints to support new client functionality
+- Optional script arguments for developers (windows)
+- Electronite Developer Viewer (windows)
+- Github actions master build workflow
+
+## <span id="14-jul-2025">14 Jul 2025</span>  ... [↩](#toc)</sup></sub>
 ### General
 - Fix scroll and page height issues
 - Make margins/padding more consistent

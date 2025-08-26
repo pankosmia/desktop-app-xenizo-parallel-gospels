@@ -36,10 +36,11 @@ npm install
    - This script is intended for setting all clients up for <b>first use</b>, or for rebuilding <b>all</b> clients to their <b>latest main</b> branch. It changes to the main<sup id="a2">[[2]](#f2)</sup> branch, pulls the latest, and builds (or rebuilds) every client every time it is run.<br />
    - Build client manually when you want to use a branch or when you only need to rebuild one client or when you do not want all clients built from their latest main branch!
 10. Run<sup id="a1">[[1]](#f1)</sup> the `build_server` script to build the Pankosmia server and assemble the build environment. (be patient. This will also take a while.)
-11.  Plan at some point to customize this readme for your project.  At minimum:
+11. If using Windows, run<sup id="a1">[[1]](#f1)</sup> the build_viewer.ps1 script in powershell to create an Electronite viewer for use with the local dev build environment.
+12.  Plan at some point to customize this readme for your project.  At minimum:
     - rewrite the top most "# desktop-app-template" section
     - replace all instances of "[your-desktop-app-repo-name]" with your desktop app repo name"
-    - delete 2. and 11., and re-number.
+    - delete 2. and 12., and re-number.
 
 ## Use
 
@@ -47,7 +48,9 @@ npm install
     - Consider also if you need to delete ~/pankosmia_working first.
    - You'll want to restart the server if deleting ~/pankosmia_working after starting the server. To restart, exit the terminal window where the server is running the run the `run` script<sup id="a1">[[1]](#f1)</sup> again.
    - Only one instance of the server can be running at a time.<sup id="a3">[[3]](#f3)</sup>
- - Client development: Manually build the client(s) changed, stop the server it is is running, then start the server (`run`).  The `run` script will re-assemble the environment to include your build.
+ - Client development:
+   - Manually build the client(s) changed, stop the server it is is running, then start the server (`run`).  The `run` script will re-assemble the environment to include your build.
+   - In windows, run the viewer.ps1 script in powershell to use the Electronite viewer with the local dev build environment.
  - To generate a release package for the OS you are using, edit the version number for the release in `app_config.env` then run<sup id="a1">[[1]](#f1)</sup> the `bundle_...` script.
  - To generate artifacts:
    1. [Manually run the desired workflow](https://docs.github.com/en/actions/how-tos/managing-workflow-runs-and-deployments/managing-workflow-runs/manually-running-a-workflow#running-a-workflow) (Actions > [select workflow] > Run workflow).
@@ -118,31 +121,35 @@ Config files must match clients and assets utilized. Scripts that write them are
 
 | Linux | Windows | MacOS |
 |-------|---------|-------|
-| <pre>buildSpec.json<br />/globalBuildResources/i18nPatch.json<br />/linux/buildResources/setup/app_setup.json</pre> | <pre>buildSpec.json<br />/globalBuildResources/i18nPatch.json<br />/windows/buildResources/setup/app_setup.json</pre> | <pre>buildSpec.json<br />/globalBuildResources/i18nPatch.json<br />/macos/buildResources/setup/app_setup.json</pre> 
+| <pre>buildSpec.json<br />/globalBuildResources/i18nPatch.json<br />/linux/buildResources/setup/app_setup.json</pre> | <pre>buildSpec.json<br />/globalBuildResources/i18nPatch.json<br />\windows\buildResources\setup\app_setup.json</pre> | <pre>buildSpec.json<br />/globalBuildResources/i18nPatch.json<br />/macos/buildResources/setup/app_setup.json</pre> 
+
 Review `app_config.env` and adjust as needed, then run one of the setup scripts that follow.  Re-run the app_setup script anytime `app_config.env` is changed.
 
 ##### Config scripts:
 Run from the provided location:
 | Description | Linux | Windows | MacOS |
 |-------------|-------|---------|-------|
-| Uses app_config.env to generate/rebuild/replace app_setup.json, buildSpec.json, and i18nPatch.json| `/linux/scripts/app_setup.bsh` | `/windows/scripts/app_setup.bat` | `/macos/scripts/app_setup.zsh` |
+| Uses app_config.env to generate/rebuild/replace app_setup.json, buildSpec.json, and i18nPatch.json| `/linux/scripts/app_setup.bsh` | `\windows\scripts\app_setup.bat` | `/macos/scripts/app_setup.zsh` |
 
 ##### Setup scripts:
 Run from the provided location:
 | Description | Linux | Windows | MacOS |
 |-------|-------|---------|-------|
-| Clones all repos in `/app_config.env` if a directly by that name does not already exit | /linux/scripts/clone.bsh | /windows/scripts/clone.bat | /macos/scripts/clone.zsh |
-| For each asset repo in `/app_config.env`: git checkout main, git pull<br />For each client repo in  `/app_config.env`: `git checkout main`, `git pull`, `npm install`, and `npm run build`.<br />***Dev's should build manually when testing branch(es).*** | /linux/scripts/build_clients.bsh | /windows/scripts/build_clients.bat | /macos/scripts/build_clients.zsh |
+| Clones all repos in `/app_config.env` if a directly by that name does not already exit | /linux/scripts/clone.bsh | \windows\scripts\clone.bat | /macos/scripts/clone.zsh |
+| For each asset repo in `/app_config.env`: git checkout main, git pull<br />For each client repo in  `/app_config.env`: `git checkout main`, `git pull`, `npm install`, and `npm run build`.<br />***Dev's should build manually when testing branch(es).*** | /linux/scripts/build_clients.bsh | \windows\scripts\build_clients.bat | /macos/scripts/build_clients.zsh |
+| Create an Electronite viewer for use with the local dev build environment. | | \windows\scripts\build_viewer.ps1<br />(use a powershell terminal) | /macos/scripts/build_viewer.zsh |
 
 ##### Usage scripts:
 
 | Description | Linux | Windows | MacOS |
 |-------|-------|---------|-------|
-| removes the build directory and runs `cargo clean` | /linux/scripts/clean.bsh | /windows/scripts/clean.bat | /macos/scripts/clean.zsh |
-| runs `clean.bat`, cargo build, and `node build.js` | /linux/scripts/build_server.bsh | /windows/scripts/build_server.bat | /macos/scripts/build_server.zsh |
-| Assembles the build environment (clients) and starts the server **(*)** | /linux/scripts/run.bsh | /windows/scripts/run.bat | /macos/scripts/run.zsh |
-| Deletes the last .zip release bundle if it it exists, runs `app_setup.bat` to ensure version consistency, then on this repo runs `git checkout main`, `git pull`, and `npm install`, runs `node build.js`, then makes a zip release bundle **(*)** | /linux/scripts/bundle_tgz.bsh | /windows/scripts/bundle_zip.ps1 | /macos/scripts/bundle_zip.zsh |
-| Deletes the last .exe release bundle if it it exists, runs `app_setup.bat` to ensure version consistency, then on this repo runs `git checkout main`, `git pull`, and `npm install`, runs `node build.js`, then makes an exe installer **(*)** **(&bull;)** | | /windows/scripts/bundle_exe.ps1 **(&bull;)** | |
+| removes the build directory and runs `cargo clean` | /linux/scripts/clean.bsh<br />Optional arguments:<br />`./clean.bsh -s`<br /> Will not ask if server is off  | \windows\scripts\clean.bat<br />Optional arguments:<br />`.\clean.bat -s`<br /> Will not ask if server is off | /macos/scripts/clean.zsh<br />Optional arguments:<br />`./clean.zsh -s`<br /> Will not ask if server is off |
+| runs `clean.bat`, cargo build, and `node build.js` | /linux/scripts/build_server.bsh<br />Optional arguments:<br />`./build_server.bsh -s`<br /> Will not ask if server is off <br />`./build_server.bsh -s`<br /> Builds server without cleaning on first build or if already cleaned | \windows\scripts\build_server.bat<br />Optional arguments:<br />`.\build_server.bat -s`<br /> Will not ask if server is off<br />`.\build_server.bat -c`<br /> Builds server without cleaning on first build or if already cleaned | /macos/scripts/build_server.zsh<br />Optional arguments:<br />`./build_server.zsh -s`<br /> Will not ask if server is off <br />`./build_server.zsh -s`<br /> Builds server without cleaning on first build or if already cleaned |
+| Assembles the build environment (clients) and starts the server **(*)** | /linux/scripts/run.bsh<br />Optional arguments:<br />`./run.bsh -s`<br /> Will not ask if server is off | \windows\scripts\run.bat<br />Optional arguments:<br />`.\run.bat -s`<br /> Will not ask if server is off | /macos/scripts/run.zsh<br />Optional arguments:<br />`./run.zsh -s`<br /> Will not ask if server is off |
+| Launches the Electronite viewer for use with the dev environment. (Requires the viewer having previously been created via the build_viewer script.) | Dev Tools: Ctrl + Shift + I | \windows\scripts\viewer.bat<br />Dev Tools: Ctrl + Shift + I | /macos/scripts/viewer.zsh<br />Dev Tools: Cmd + Option + I |
+| Deletes the last .exe stand-alone viewer bundle, .zip release bundle, and windows/temp contents if they exists, then on this repo runs `git checkout main`, `git pull`, and `npm install`, runs `app_setup.bat` to ensure version consistency, runs `node build.js`, then makes a zip release bundle and a stand-alone exe installer. **(*) (•)** | | \windows\scripts\bundle_viewer.ps1<br />Optional arguments:<br /><nobr>`.\bundle_viewer.ps1 -ServerOff "Y"`</nobr><br /> or: "y"; Will not ask if server is off | /macos/scripts/bundle_viewer.zsh<br />Optional arguments:<br />`./bundle_viewer.zsh -s`<br> Will not ask if server is off |
+| Deletes the last .zip release bundle if it it exists, then on this repo runs `git checkout main`, `git pull`, and `npm install`, runs `app_setup.bat` to ensure version consistency, runs `node build.js`, then makes a zip release bundle **(*)** | /linux/scripts/bundle_tgz.bsh<br />Optional arguments:<br />`./bundle_tgz.bsh -s`<br /> Will not ask if server is off<br />`/bundle_tgz.bsh -g`<br /> Run from Github Actions | \windows\scripts\bundle_zip.ps1<br />Optional arguments:<br />-ServerOff "Y"<br /> or: "y"; Will not ask if server is off<br />-IsGHA "Y"<br /> or: "y"; Run from Gihtub Actions | /macos/scripts/bundle_zip.zsh<br />Optional arguments:<br />`/bundle_zip.zsh -s`<br /> Will not ask if server is off<br />`/bundle_zip.zsh -g`<br /> Run from Github Actions |
+| Deletes the last .exe release bundle if it it exists, then on this repo runs `git checkout main`, `git pull`, and `npm install`, runs `app_setup.bat` to ensure version consistency, runs `node build.js`, then makes an exe installer **(*)** **(&bull;)** | | \windows\scripts\bundle_exe.ps1<br />Optional arguments:<br /><nobr>`bundle_exe.ps1 -ServerOff "Y"`</nobr><br /> or: "y"; Will not ask if server is off<br />**(&bull;)** | |
 
 **(*)** ***Ensure the server (build_server.bat) is current!***<br />
 **(&bull;)** ***Environment prerequisite for running the exe build locally: Install [Inno Setup](https://jrsoftware.org/isdl.php) -tested with v6.4.3***
@@ -152,4 +159,4 @@ Run from the provided location:
 Run from the provided location:
 | Description | Linux | Windows | MacOS |
 |-------|-------|---------|-------|
-| Facilitates syncing with upstream with exclusion of files expected to differ: | /linux/scripts/sync.bsh | /windows/scripts/sync.bat | /macos/scripts/sync.zsh |
+| Facilitates syncing with upstream with exclusion of files expected to differ: | /linux/scripts/sync.bsh<br />Optional arguments:<br />`./sync.bsh -p`<br /> Will not ask if latest is already pulled. | \windows\scripts\sync.bat<br />Optional arguments:<br />`.\sync.bat -p`<br /> Will not ask if latest is already pulled | /macos/scripts/sync.zsh<br />Optional arguments:<br />`./sync.zsh -p`<br /> Will not ask if latest is already pulled. |

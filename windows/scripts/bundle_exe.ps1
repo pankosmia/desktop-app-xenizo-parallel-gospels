@@ -1,9 +1,20 @@
 # This script (the .\makeInstall.bat part) uses the APP_VERSION environment variable as defined in app_config.env
 
-# run from pankosmia\[this-repo's-name]\windows\scripts directory in powershell by:  .\bundle_zip.ps1
+# Run from pankosmia\[this-repo's-name]\windows\scripts directory in powershell by:  .\bundle_zip.ps1
+# with the optional arguments of: .\bundle_exe.ps1 -ServerOff "Y"
+# or: .\bundle_exe.ps1 -ServerOff "y"
 
-echo "`n"
-$answer = Read-Host "     Is the server off?[Y/N]"
+param(
+    [string]$ServerOff
+)
+
+if ($ServerOff -eq 'Y') {
+  $answer = $ServerOff
+} else {
+  echo "`n"
+  $answer = Read-Host "     Is the server off?[Y/N y/n]"
+}
+
 if ($answer -eq 'Y') {
     echo "`n"
     echo "Continuing..."
@@ -29,8 +40,16 @@ if ($answer -eq 'Y') {
     exit
   }
 
+  cd ..\..\
+  echo "checkout main"
+  git checkout main | Out-Null
+  echo "pull"
+  git pull
+  echo "npm install"
+  npm install
   echo "`n"
   echo "Running app_setup to ensure version number consistency between buildSpec.json and this build bundle:"
+  cd windows\scripts
   .\app_setup.bat
 
   cd ..\..\
@@ -38,12 +57,7 @@ if ($answer -eq 'Y') {
     echo "A previous windows .exe release exists. Removing..."
     Remove-Item releases\windows\*.exe
   }
-  echo "checkout main"
-  git checkout main | Out-Null
-  echo "pull"
-  git pull
-  echo "npm install"
-  npm install
+
   cd windows\scripts
   if (Test-Path ..\build) {
     echo "Removing last build environment"
