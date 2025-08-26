@@ -1,4 +1,4 @@
-#define MyAppIcoName "icon.ico"
+#define AppIcoName "favicon.ico"
 
 [Setup]
 AppName={#GetEnv('APP_NAME')}
@@ -11,13 +11,11 @@ SolidCompression=yes
 
 [Files]
 Source: "..\temp\project\payload\app\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
-Source: "..\..\globalBuildResources\{#MyAppIcoName}"; DestDir: "{app}"
+Source: "..\..\globalBuildResources\{#AppIcoName}"; DestDir: "{app}"
 
 [Icons]
-Name: "{group}\{#GetEnv('APP_NAME')}"; Filename: "{app}\electron\electron.exe"; Parameters: """{app}\electron"""
-  IconFilename: "{app}\{#MyAppIcoName}"; Tasks: desktopicon
-Name: "{userdesktop}\{#GetEnv('APP_NAME')}"; Filename: "{app}\electron\electron.exe"; Parameters: """{app}\electron"""
-  IconFilename: "{app}\{#MyAppIcoName}"; Tasks: desktopicon
+Name: "{group}\{#GetEnv('APP_NAME')}"; Filename: "{app}\electron\electron.exe"; Parameters: """{app}\electron"""; IconFilename: "{app}\{#AppIcoName}"; Tasks: desktopicon
+Name: "{userdesktop}\{#GetEnv('APP_NAME')}"; Filename: "{app}\electron\electron.exe"; Parameters: """{app}\electron""";  IconFilename: "{app}\{#AppIcoName}"; Tasks: desktopicon
 Name: "{userdesktop}\{#GetEnv('APP_NAME')} README"; Filename: "{app}\README.txt"; Tasks: desktopicon
 Name: "{group}\Uninstall {#GetEnv('APP_NAME')} (Delete App Files)"; Filename: "{uninstallexe}"; Parameters: "/DELETE /ALLFILES"
 
