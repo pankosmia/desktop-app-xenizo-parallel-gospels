@@ -151,7 +151,7 @@ if ! [[ $devRun =~ ^(-d) ]]; then
   rm "$PLIST_FILE.bak"
 
   echo "New  plist file:"
-  type "$PLIST_FILE"
+  cat "$PLIST_FILE"
 
   cp -R ./bin ${APP_BASE_DIR}/Contents/
   echo "copied bin to $APP_BASE_DIR/Contents/"
