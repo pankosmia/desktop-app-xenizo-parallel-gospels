@@ -114,6 +114,18 @@ git reset app_config.env
 git checkout app_config.env
 echo globalBuildResources\favicon.ico:
 git reset globalBuildResources\favicon.ico
+echo globalBuildResources\icon.icns:
+git reset globalBuildResources\icon.icns
+echo globalBuildResources\icon.ico:
+git reset globalBuildResources\icon.ico
+echo globalBuildResources\icon.png:
+git reset globalBuildResources\icon.png
+echo globalBuildResources\icon@1.25x.png:
+git reset globalBuildResources\icon@1.25x.png
+echo globalBuildResources\icon@1.5x.png:
+git reset globalBuildResources\icon@1.5x.png
+echo globalBuildResources\icon@2x.png:
+git reset globalBuildResources\icon@2x.png
 git checkout globalBuildResources\favicon.ico
 echo globalBuildResources\theme.json:
 git reset globalBuildResources\theme.json
