@@ -1,4 +1,4 @@
-#define AppIcoName "favicon.ico"
+#define AppIcoName "icon.ico"
 
 [Setup]
 AppName={#GetEnv('APP_NAME')}
