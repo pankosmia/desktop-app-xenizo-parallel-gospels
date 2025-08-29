@@ -105,6 +105,12 @@ foreach ($ARCH in @("intel64")) {
     }
 }
 
+# Remove temporary electronite files from local dev viewer build.
+if ($Dev -eq 'Y') {
+  Remove-Item -Path "..\$pkgDir\electron" -Recurse -Force -ErrorAction SilentlyContinue
+  Remove-Item -Path "..\$pkgDir\electron.*" -Recurse -Force -ErrorAction SilentlyContinue
+}
+
 if ($Dev -ne 'Y') {
   Write-Host "All architectures built successfully"
 }
