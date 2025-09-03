@@ -1,3 +1,5 @@
+#!/usr/bin/env zsh
+
 # Run from pankosmia\[this-repo's-name]\macos\scripts directory by:  .\build_viewer.zsh
 
 TEMP_DIR=../viewer
