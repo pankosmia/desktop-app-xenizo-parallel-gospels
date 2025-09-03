@@ -38,7 +38,7 @@ if defined %runSetup (
 
 REM set port environment variables
 set ROCKET_PORT=19119
-set RUST_BACKTRACE=1
+
 if exist ..\build (
   echo "Removing last build environment"
   rmdir ..\build /s /q

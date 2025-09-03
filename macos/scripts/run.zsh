@@ -45,7 +45,6 @@ fi
 
 # set port environment variables
 export ROCKET_PORT=19119
-export RUST_BACKTRACE=1
 
 if [ -d ../build ]; then
   echo "Removing last build environment..."
