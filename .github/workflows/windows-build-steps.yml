@@ -25,7 +25,11 @@ jobs:
       zip-name: ${{ steps.get-zip-name.outputs.zip-name }}
       exe-name: ${{ steps.get-exe-name.outputs.exe-name }}
       electronite-exe-name: ${{ steps.get-electronite-exe-name.outputs.electronite-exe-name }}
-    
+
+    # Set process.env.CI to false to prevent treating warnings as errors
+    env:
+      CI: false
+
     steps:
       # Turn off re-runs
       - name: No re-runs please

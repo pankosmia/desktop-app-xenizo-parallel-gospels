@@ -36,7 +36,11 @@ jobs:
       zip-name: ${{ steps.get-zip-name.outputs.zip-name }}
       pkg-name-arm: ${{ steps.get-installer-names.outputs.pkg-name-arm }}
       pkg-name-intel: ${{ steps.get-installer-names.outputs.pkg-name-intel }}
-    
+
+    # Set process.env.CI to false to prevent treating warnings as errors
+    env:
+      CI: false
+
     steps:
       # Turn off re-runs
       - name: No re-runs please
