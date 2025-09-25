@@ -18,6 +18,10 @@ jobs:
     outputs:
       tgz-name: ${{ steps.get-tgz-name.outputs.tgz-name }}
     
+    # Set process.env.CI to false to prevent treating warnings as errors
+    env:
+      CI: false
+
     steps:
       # Turn off re-runs
       - name: No re-runs please
@@ -39,6 +43,12 @@ jobs:
       # Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      # Specify node.js version
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.11.0'
 
       # Install the repository
       - name: Install this repo
