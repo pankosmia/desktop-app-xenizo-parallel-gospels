@@ -1,8 +1,15 @@
 # <span id="toc">CHANGELOG</span>
+- [29 Sep 2025](#29-sep-2025)
 - [21 Aug 2025](#21-aug-2025)
 - [19 Aug 2025](#19-aug-2025)
 - [16 Aug 2025](#16-aug-2025)
 - [14 Jul 2025](#14-jul-2025)
+
+## <span id="29-sep-2025">29 Sep 2025</span>  ... [↩](#toc)</sup></sub>
+- Electronite Development Viewer (linux)
+- Icon generation for varying build contexts
+- Github Actions and local build process improvements
+- Streamline dev script prompts
 
 ## <span id="21-aug-2025">21 Aug 2025</span>  ... [↩](#toc)</sup></sub>
 - Electronite Development Viewer (macos)
