@@ -6,10 +6,26 @@
 - [14 Jul 2025](#14-jul-2025)
 
 ## <span id="29-sep-2025">29 Sep 2025</span>  ... [↩](#toc)</sup></sub>
-- Electronite Development Viewer (linux)
-- Icon generation for varying build contexts
-- Github Actions and local build process improvements
-- Streamline dev script prompts
+- General:
+  - Indonesian localization 
+- Content management:
+  - Improved export including zip
+  - Improved dashboard
+  - Improved language picker
+- Remote content:
+  - Show remote updates
+  - Download manager as modal
+  - Version control manager supporting push, pull and merge with control over remotes and branches
+- Editors:
+  - MUI for shared Scripture editor
+  - USFM <=> USJ now uses Proskomma
+  - Distraction-free editing mode
+  - Fixes to drafting editor
+- Build:
+  - Electronite Development Viewer (linux)
+  - Icon generation for varying build contexts
+  - Github Actions and local build process improvements
+  - Streamline dev script prompts
 
 ## <span id="21-aug-2025">21 Aug 2025</span>  ... [↩](#toc)</sup></sub>
 - Electronite Development Viewer (macos)
