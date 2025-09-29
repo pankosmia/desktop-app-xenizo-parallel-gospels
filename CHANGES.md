@@ -21,7 +21,7 @@
   - USFM <=> USJ now uses Proskomma
   - Distraction-free editing mode
   - Fixes to drafting editor
-- Build:
+- Build / Development Environment:
   - Electronite Development Viewer (linux)
   - Icon generation for varying build contexts
   - Github Actions and local build process improvements
