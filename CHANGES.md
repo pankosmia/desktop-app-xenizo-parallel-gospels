@@ -7,7 +7,8 @@
 
 ## <span id="29-sep-2025">29 Sep 2025</span>  ... [↩](#toc)</sup></sub>
 - General:
-  - Indonesian localization 
+  - Indonesian localization
+  - Improved main menu
 - Content management:
   - Improved export including zip
   - Improved dashboard
