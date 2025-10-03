@@ -1,11 +1,11 @@
 # <span id="toc">CHANGELOG</span>
-- [29 Sep 2025](#29-sep-2025)
+- [3 Oct 2025](#3-oct-2025)
 - [21 Aug 2025](#21-aug-2025)
 - [19 Aug 2025](#19-aug-2025)
 - [16 Aug 2025](#16-aug-2025)
 - [14 Jul 2025](#14-jul-2025)
 
-## <span id="29-sep-2025">29 Sep 2025</span>  ... [↩](#toc)</sup></sub>
+## <span id="3-oct-2025">3 Oct 2025</span>  ... [↩](#toc)</sup></sub>
 - General:
   - Indonesian localization
   - Improved main menu
